@@ -45,22 +45,24 @@ class NoteViewModel(
 
             is NoteEvent.SaveNote -> {
                 val note = Note(
-                    title = event.title,
-                    description = event.description,
+                    title = state.value.title.value,
+                    description = state.value.description.value,
                     dateAdded = System.currentTimeMillis()
                 )
+
                 viewModelScope.launch {
                     dao.upsertNote(note)
                 }
+
                 _state.update {
-                    it.copy(
+                    it.copy (
                         title = mutableStateOf(""), description = mutableStateOf("")
                     )
                 }
             }
 
             NoteEvent.SortNotes -> {
-
+                isSortedByDateAdded.value = !isSortedByDateAdded.value
             }
         }
     }
