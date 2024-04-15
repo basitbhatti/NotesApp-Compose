@@ -10,5 +10,5 @@ sealed interface NoteEvent {
 
     data class SaveNote(
         val title: String, val description: String
-    )
+    ) : NoteEvent
 }
